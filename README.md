@@ -30,7 +30,7 @@ For example:
 
 So you can do that:
 
-```
+```javascript
 var json1 = '{"foo": "bar","baz": true}';
 var json2 = '{foo: "bar",baz: true}';
 
