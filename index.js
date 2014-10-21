@@ -58,9 +58,11 @@ function getBody(str, pos) {
     // parse true / false
     if(str[pos] === "t") {
         if(str.indexOf("true", pos) === pos) return "true";
+        throw new Error("Broken JSON boolean body near " + str.substr(0, pos + 10));
     }
     if(str[pos] === "f") {
         if(str.indexOf("f", pos) === pos) return "false";
+        throw new Error("Broken JSON boolean body near " + str.substr(0, pos + 10));
     }
 
     // parse number
@@ -181,7 +183,7 @@ function parse(str) {
                 i += (body.length - 1);
                 result += parse(body);
                 type = "afterBody";
-            } else if(type === "afterBody") {
+            } else if(type === "afterBody" || type === "needKey") {
                 if(str[i] === ",") {
                     result += ",";
                     type = "needKey";
@@ -205,6 +207,11 @@ function parse(str) {
             if(" " === str[i] || "\n" === str[i] || "\t" === str[i]) {
                 result += str[i];
             } else if(type === "needBody") {
+                if(str[i] === "]" && i === str.length - 1) {
+                    result += "]";
+                    return result;
+                }
+
                 var body = getBody(str, i);
                 i += body.length - 1;
                 result += parse(body);
