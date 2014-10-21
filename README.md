@@ -32,12 +32,12 @@ So you can do that:
 
 ```javascript
 var json1 = '{"foo": "bar","baz": true}';
-var json2 = '{foo: "bar",baz: true}';
+var json2 = '{foo: "bar",baz: true,c:[]}';
 
 JSON.parse(json1);              ///< { foo: 'bar', baz: true }
 JSON.parse(json2);              ///< SyntaxError: Unexpected token f
 fJSON.parse(json1);             ///< { foo: 'bar', baz: true }
-fJSON.parse(json2);             ///< { foo: 'bar', baz: true }   ＼(●´ϖ`●)／
+fJSON.parse(json2);             ///< { foo: 'bar', baz: true, c: [] }   ＼(●´ϖ`●)／
 ```
 
 ## Contribute
