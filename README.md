@@ -1,5 +1,7 @@
 # F[嗶][嗶]k JSON
 
+![fbbk-json](http://img.shields.io/npm/v/fbbk-json.svg)
+
 Parse JSON-Object string (not normalized JSON string) into JSON object.
 
 ## Installation
