@@ -119,6 +119,8 @@ function getBody(str, pos) {
 
         throw new Error("Broken JSON " + (str[pos] === "{" ? "object" : "array") + " body near " + body);
     }
+
+    throw new Error("Broken JSON body near " + str.substr((pos - 5 >= 0) ? pos - 5 : 0, 50));
 }
 
 /**
