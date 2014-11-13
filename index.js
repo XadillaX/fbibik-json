@@ -124,6 +124,20 @@ function getBody(str, pos) {
 }
 
 /**
+ * is a char can be key head
+ * @param ch
+ * @returns {boolean}
+ */
+function canBeKeyHead(ch) {
+    if(ch[0] === "\\") return false;
+    if((ch[0] >= 'a' && ch[0] <= 'z') || (ch[0] >= 'A' && ch[0] <= 'Z') || ch[0] === '_') return true;
+    if(ch[0] >= '0' && ch[0] <= '9') return true;
+    if(ch[0] === '$') return true;
+    if(ch.charCodeAt(0) > 255) return true;
+    return false;
+};
+
+/**
  * parse JSON
  * @param str
  */
@@ -170,7 +184,7 @@ function parse(str) {
                 i += key.length;
                 i += 1;
                 type = "afterKey";
-            } else if(type === "needKey" && ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || str[i] === '_')) {
+            } else if(type === "needKey" && canBeKeyHead(str[i])/**((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || str[i] === '_')*/) {
                 var key = parseKey(str, i);
                 result += "\"";
                 result += key;

@@ -1,6 +1,6 @@
 {
   "name": "fbbk-json",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Parse JSON-Object string (not normalized JSON string) into JSON object.",
   "main": "index.js",
   "directories": {
@@ -19,9 +19,8 @@
   ],
   "author": "XadillaX",
   "license": "GPLv2",
-  "readmeFilename": "README.md",
-  "gitHead": "9a68b41afbadf691e0c39a148277717eb8eede35",
   "bugs": {
     "url": "https://github.com/XadillaX/fbibik-json/issues"
-  }
+  },
+  "homepage": "https://github.com/XadillaX/fbibik-json"
 }
