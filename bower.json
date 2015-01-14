@@ -1,0 +1,22 @@
+{
+  "name": "fbbk-json",
+  "main": "index.js",
+  "version": "0.0.5",
+  "homepage": "https://github.com/XadillaX/fbibik-json",
+  "authors": [
+    "XadillaX"
+  ],
+  "description": "Parse JSON-Object string (not normalized JSON string) into JSON object.",
+  "keywords": [
+    "JSON",
+    "JSON object"
+  ],
+  "license": "GPLv2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
