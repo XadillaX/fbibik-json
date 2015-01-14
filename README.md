@@ -10,6 +10,12 @@ Parse JSON-Object string (not normalized JSON string) into JSON object.
 $ npm install fbbk-json
 ```
 
+or
+
+```sh
+$ bower install fbbk-json
+```
+
 ## Usage
 
 This package has only one function:
