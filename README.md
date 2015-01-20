@@ -7,7 +7,7 @@ Parse JSON-Object string (not normalized JSON string) into JSON object.
 ## Installation
 
 ```sh
-$ npm install fbbk-json
+$ npm install fbbk-json --save
 ```
 
 or
