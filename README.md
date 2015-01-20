@@ -13,7 +13,7 @@ $ npm install fbbk-json --save
 or
 
 ```sh
-$ bower install fbbk-json
+$ bower install fbbk-json --save
 ```
 
 ## Usage
