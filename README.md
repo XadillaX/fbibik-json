@@ -40,7 +40,7 @@ So you can do that:
 
 ```javascript
 var json1 = '{"foo": "bar","baz": true}';
-var json2 = '{foo: "bar",baz: true,c:[]}';
+var json2 = '{foo: \'bar\',baz: true,c:[]}';
 
 JSON.parse(json1);              ///< { foo: 'bar', baz: true }
 JSON.parse(json2);              ///< SyntaxError: Unexpected token f
@@ -50,6 +50,6 @@ fJSON.parse(json2);             ///< { foo: 'bar', baz: true, c: [] }   ＼(●�
 
 ## Contribute
 
-You're welcome to pull requests!
+You're welcome to make pull requests!
 
 「雖然我覺得不怎麼可能有人會關注我」
