@@ -1,7 +1,7 @@
 {
   "name": "fbbk-json",
   "main": "index.js",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "homepage": "https://github.com/XadillaX/fbibik-json",
   "authors": [
     "XadillaX"
@@ -20,3 +20,4 @@
     "tests"
   ]
 }
+

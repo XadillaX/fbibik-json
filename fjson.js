@@ -43,14 +43,14 @@
     function getBody(str, pos) {
         // parse string body
         if(str[pos] === "\"" || str[pos] === "'") {
-            var body = str[pos];
+            var body = "\"";
             for(var i = pos + 1; i < str.length; i++) {
                 if(str[i] === "\\") {
                     body += str[i];
                     if(i + 1 < str.length) body += str[i + 1];
                     i++;
                 } else if(str[i] === str[pos]) {
-                    body += str[i];
+                    body += "\"";
                     return body;
                 } else body += str[i];
             }
@@ -152,7 +152,13 @@
         /**
          * string
          */
-        if(str[0] === "\"" || str[1] === "'") {
+        if(str[0] === "\"" || str[0] === "'") {
+            if(str[str.length - 1] !== str[0]) {
+                throw new Error("Invalid string JSON object.");
+            }
+
+            if(str[0] === "'") str[0] = "\"";
+            if(str[str.length - 1] === "'") str[str.length - 1] = "\"";
             return str;
         }
     
