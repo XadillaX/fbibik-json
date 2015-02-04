@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/XadillaX/fbibik-json/issues"
   },
-  "homepage": "https://github.com/XadillaX/fbibik-json"
+  "homepage": "https://github.com/XadillaX/fbibik-json",
+  "devDependencies": {
+    "uglify-js": "^2.4.16"
+  }
 }
