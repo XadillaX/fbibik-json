@@ -2,6 +2,7 @@ NODE ?=
 
 build:
 	@$(NODE) ./node_modules/.bin/uglifyjs \
-		fjson.js > fjson.min.js
+		fjson.js -o fjson.min.js --reserved "module,exports,fJSON,parse" \
+		--source-map fjson.min.map -c -m sort
 
 .PHONY: build
