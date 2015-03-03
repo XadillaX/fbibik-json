@@ -4,7 +4,7 @@
  * Copyright (c) 2014 Huaban.com, all rights
  * reserved.
  */
-"ust strict";
+"use strict";
 
 (function() {
     /**
