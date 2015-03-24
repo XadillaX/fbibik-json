@@ -67,6 +67,12 @@
             if(str.indexOf("f", pos) === pos) return "false";
             throw new Error("Broken JSON boolean body near " + str.substr(0, pos + 10));
         }
+
+        // parse null
+        if(str[pos] === "n") {
+            if(str.indexOf("null", pos) === pos) return "null";
+            throw new Error("Broken JSON boolean body near " + str.substr(0, pos + 10));
+        }
     
         // parse number
         if(str[pos] === "-" || str[pos] === "+" || str[pos] === "." || (str[pos] >= "0" && str[pos] <= "9")) {
@@ -167,6 +173,13 @@
          */
         if(str === "true" || str === "false") {
             return str;
+        }
+
+        /**
+         * null
+         */
+        if(str === "null") {
+            return "null";
         }
     
         /**

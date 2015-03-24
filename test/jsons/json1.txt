@@ -1,0 +1,16 @@
+[
+    {
+        name: "user_id",
+        alias: "userId",
+        primaryKey: true
+    },
+    { name: "username" },
+    { name: "password" },
+    { name: "email" },
+    { name: "urlname" },
+    { name: "created_at", alias: "createdAt"},
+    { name: "avatar" },
+    { name: "roles" },
+    { name: "rating" }
+]
+
