@@ -21,6 +21,7 @@ describe("test for fbbk-json", function() {
                     json2 = new Function("return " + text)();
                 } catch(e) {
                     (e instanceof Error).should.be.eql(false);
+                    (1).should.be.eql(0);
                 }
 
                 json1.should.be.eql(json2);
