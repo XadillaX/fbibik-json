@@ -1,6 +1,6 @@
 {
   "name": "fbbk-json",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Parse JSON-Object string (not normalized JSON string) into JSON object.",
   "main": "fjson.js",
   "directories": {
@@ -18,7 +18,7 @@
     "JSON object"
   ],
   "author": "XadillaX",
-  "license": "GPLv2",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/XadillaX/fbibik-json/issues"
   },
