@@ -18,8 +18,11 @@ describe("test for fbbk-json", function() {
                 var json1, json2;
                 try {
                     json1 = fbbk.parse(text);
-                    json2 = new Function("return " + text)();
+                    json2 = new Function("return " + text)(); // jshint ignore: line
                 } catch(e) {
+                    if(e) {
+                        console.log(e.stack);
+                    }
                     (e instanceof Error).should.be.eql(false);
                     (1).should.be.eql(0);
                 }
@@ -34,4 +37,3 @@ describe("test for fbbk-json", function() {
         }
     });
 });
-
