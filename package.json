@@ -1,6 +1,6 @@
 {
   "name": "fbbk-json",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "description": "Parse JSON-Object string (not normalized JSON string) into JSON object.",
   "main": "fjson.js",
   "directories": {
