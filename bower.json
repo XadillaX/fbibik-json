@@ -11,7 +11,7 @@
     "JSON",
     "JSON object"
   ],
-  "license": "GPLv2",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
