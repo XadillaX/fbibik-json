@@ -54,7 +54,7 @@
                     return body;
                 } else body += str[i];
             }
-    
+   
             throw new Error("Broken JSON string body near " + body);
         }
     
@@ -103,21 +103,29 @@
                     } else {
                         stack.push(str[i]);
                     }
-                } else if(str[i] === "{") {
-                    stack.push("{");
-                } else if(str[i] === "}") {
-                    if(stack[stack.length - 1] === "{") {
+                } else if(str[i] === "'") {
+                    if(stack[stack.length - 1] === "'") {
                         stack.pop();
                     } else {
-                        throw new Error("Broken JSON " + (str[pos] === "{" ? "object" : "array") + " body near " + body);
+                        stack.push(str[i]);
                     }
-                } else if(str[i] === "[") {
-                    stack.push("[");
-                } else if(str[i] === "]") {
-                    if(stack[stack.length - 1] === "[") {
-                        stack.pop();
-                    } else {
-                        throw new Error("Broken JSON " + (str[pos] === "{" ? "object" : "array") + " body near " + body);
+                } else if(stack[stack.length - 1] !== "\"" && stack[stack.length - 1] !== "'") {
+                    if(str[i] === "{") {
+                        stack.push("{");
+                    } else if(str[i] === "}") {
+                        if(stack[stack.length - 1] === "{") {
+                            stack.pop();
+                        } else {
+                            throw new Error("Broken JSON " + (str[pos] === "{" ? "object" : "array") + " body near " + body);
+                        }
+                    } else if(str[i] === "[") {
+                        stack.push("[");
+                    } else if(str[i] === "]") {
+                        if(stack[stack.length - 1] === "[") {
+                            stack.pop();
+                        } else {
+                            throw new Error("Broken JSON " + (str[pos] === "{" ? "object" : "array") + " body near " + body);
+                        }
                     }
                 }
     

@@ -1,0 +1,22 @@
+{
+    "raw": {
+        "target_type": "users",
+        "target": [
+            "cn_"
+        ],
+        "msg": {
+            "type": "txt",
+            "msg": "ke;kf[esfpooewkpfwefs"
+        },
+        "from": "cn_20001",
+        "ext": {
+            "messageType": "7",
+            "content": "ke;kf[esfpooewkpfwefs",
+            "androidP": "blahblah",
+            "iosP": "blahblah"
+        },
+        "method": "H",
+        "app": "souche_souchetest",
+        "task_id": "TEMP-nmm-huanxin-cheniu-bilibili"
+    }
+}
