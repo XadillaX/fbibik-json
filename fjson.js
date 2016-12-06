@@ -93,7 +93,12 @@
             var stack = [ str[pos] ];
             var body = str[pos];
             for(var i = pos + 1; i < str.length; i++) {
-                body += str[i];
+                if(stack[stack.length - 1] === "'" && str[i] === "\"") {
+                    body += "\\\"";
+                } else {
+                    body += str[i];
+                }
+
                 if(str[i] === "\\") {
                     if(i + 1 < str.length) body += str[i + 1];
                     i++;
@@ -130,7 +135,7 @@
                 }
     
                 if(!stack.length) {
-                    return body;
+                    return [i, body];
                 }
             }
     
@@ -204,7 +209,7 @@
         if(str[0] === "{") {
             var type = "needKey";
             var result = "{";
-    
+
             for(var i = 1; i < str.length; i++) {
                 if(" " === str[i] || "\n" === str[i] || "\t" === str[i]) {
                     result += str[i];
@@ -226,8 +231,15 @@
                     type = ":";
                 } else if(type === ":") {
                     var body = getBody(str, i);
-                    i += (body.length - 1);
-                    result += parse(body);
+
+                    if(Array.isArray(body)) {
+                        i = body[0];
+                        result += parse(body[1]);
+                    } else {
+                        i += (body.length - 1);
+                        result += parse(body);
+                    }
+
                     type = "afterBody";
                 } else if(type === "afterBody" || type === "needKey") {
                     if(str[i] === ",") {
@@ -259,8 +271,15 @@
                     }
     
                     var body = getBody(str, i);
-                    i += body.length - 1;
-                    result += parse(body);
+
+                     if(Array.isArray(body)) {
+                        i = body[0];
+                        result += parse(body[1]);
+                    } else {
+                        i += (body.length - 1);
+                        result += parse(body);
+                    }
+
                     type = "afterBody";
                 } else if(type === "afterBody") {
                     if(str[i] === ",") {
