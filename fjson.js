@@ -100,13 +100,13 @@
                 } else if(str[i] === "\"") {
                     if(stack[stack.length - 1] === "\"") {
                         stack.pop();
-                    } else {
+                    } else if(stack[stack.length - 1] !== "'") {
                         stack.push(str[i]);
                     }
                 } else if(str[i] === "'") {
                     if(stack[stack.length - 1] === "'") {
                         stack.pop();
-                    } else {
+                    } else if(stack[stack.length - 1] !== "\"") {
                         stack.push(str[i]);
                     }
                 } else if(stack[stack.length - 1] !== "\"" && stack[stack.length - 1] !== "'") {
