@@ -51,7 +51,10 @@
                     i++;
                 } else if(str[i] === str[pos]) {
                     body += "\"";
-                    return body;
+                    return {
+                        originLength: pos + body.length - 1,
+                        body: body
+                    };
                 } else body += str[i];
             }
    
@@ -60,17 +63,32 @@
     
         // parse true / false
         if(str[pos] === "t") {
-            if(str.indexOf("true", pos) === pos) return "true";
+            if(str.indexOf("true", pos) === pos) {
+                return {
+                    originLength: pos + "true".length - 1,
+                    body: "true"
+                };
+            }
             throw new Error("Broken JSON boolean body near " + str.substr(0, pos + 10));
         }
         if(str[pos] === "f") {
-            if(str.indexOf("f", pos) === pos) return "false";
+            if(str.indexOf("f", pos) === pos) {
+                return {
+                    originLength: pos + "false".length - 1,
+                    body: "false"
+                };
+            }
             throw new Error("Broken JSON boolean body near " + str.substr(0, pos + 10));
         }
 
         // parse null
         if(str[pos] === "n") {
-            if(str.indexOf("null", pos) === pos) return "null";
+            if(str.indexOf("null", pos) === pos) {
+                return {
+                    originLength: pos + "null".length - 1,
+                    body: "null"
+                };
+            }
             throw new Error("Broken JSON boolean body near " + str.substr(0, pos + 10));
         }
     
@@ -81,7 +99,10 @@
                 if(str[i] === "-" || str[i] === "+" || str[i] === "." || (str[i] >= "0" && str[i] <= "9")) {
                     body += str[i];
                 } else {
-                    return body;
+                    return {
+                        originLength: pos + body.length - 1,
+                        body: body
+                    };
                 }
             }
     
@@ -135,7 +156,10 @@
                 }
     
                 if(!stack.length) {
-                    return [i, body];
+                    return {
+                        originLength: i,
+                        body: body
+                    };
                 }
             }
     
@@ -232,13 +256,8 @@
                 } else if(type === ":") {
                     var body = getBody(str, i);
 
-                    if(Array.isArray(body)) {
-                        i = body[0];
-                        result += parse(body[1]);
-                    } else {
-                        i += (body.length - 1);
-                        result += parse(body);
-                    }
+                    i = body.originLength;
+                    result += parse(body.body);
 
                     type = "afterBody";
                 } else if(type === "afterBody" || type === "needKey") {
@@ -272,13 +291,8 @@
     
                     var body = getBody(str, i);
 
-                     if(Array.isArray(body)) {
-                        i = body[0];
-                        result += parse(body[1]);
-                    } else {
-                        i += (body.length - 1);
-                        result += parse(body);
-                    }
+                    i = body.originLength;
+                    result += parse(body.body);
 
                     type = "afterBody";
                 } else if(type === "afterBody") {
