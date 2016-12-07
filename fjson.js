@@ -52,7 +52,7 @@
                 } else if(str[i] === str[pos]) {
                     body += "\"";
                     return {
-                        originLength: pos + body.length - 1,
+                        originLength: body.length,
                         body: body
                     };
                 } else body += str[i];
@@ -65,7 +65,7 @@
         if(str[pos] === "t") {
             if(str.indexOf("true", pos) === pos) {
                 return {
-                    originLength: pos + "true".length - 1,
+                    originLength: "true".length,
                     body: "true"
                 };
             }
@@ -74,7 +74,7 @@
         if(str[pos] === "f") {
             if(str.indexOf("f", pos) === pos) {
                 return {
-                    originLength: pos + "false".length - 1,
+                    originLength: "false".length,
                     body: "false"
                 };
             }
@@ -85,7 +85,7 @@
         if(str[pos] === "n") {
             if(str.indexOf("null", pos) === pos) {
                 return {
-                    originLength: pos + "null".length - 1,
+                    originLength: "null".length,
                     body: "null"
                 };
             }
@@ -100,7 +100,7 @@
                     body += str[i];
                 } else {
                     return {
-                        originLength: pos + body.length - 1,
+                        originLength: body.length,
                         body: body
                     };
                 }
@@ -157,7 +157,7 @@
     
                 if(!stack.length) {
                     return {
-                        originLength: i,
+                        originLength: i - pos,
                         body: body
                     };
                 }
@@ -256,7 +256,7 @@
                 } else if(type === ":") {
                     var body = getBody(str, i);
 
-                    i = body.originLength;
+                    i = i + body.originLength - 1;
                     result += parse(body.body);
 
                     type = "afterBody";
@@ -291,7 +291,7 @@
     
                     var body = getBody(str, i);
 
-                    i = body.originLength;
+                    i = i + body.originLength - 1;
                     result += parse(body.body);
 
                     type = "afterBody";
