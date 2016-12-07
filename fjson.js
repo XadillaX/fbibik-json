@@ -51,7 +51,10 @@
                     i++;
                 } else if(str[i] === str[pos]) {
                     body += "\"";
-                    return body;
+                    return {
+                        originLength: body.length,
+                        body: body
+                    };
                 } else body += str[i];
             }
    
@@ -60,17 +63,32 @@
     
         // parse true / false
         if(str[pos] === "t") {
-            if(str.indexOf("true", pos) === pos) return "true";
+            if(str.indexOf("true", pos) === pos) {
+                return {
+                    originLength: "true".length,
+                    body: "true"
+                };
+            }
             throw new Error("Broken JSON boolean body near " + str.substr(0, pos + 10));
         }
         if(str[pos] === "f") {
-            if(str.indexOf("f", pos) === pos) return "false";
+            if(str.indexOf("f", pos) === pos) {
+                return {
+                    originLength: "false".length,
+                    body: "false"
+                };
+            }
             throw new Error("Broken JSON boolean body near " + str.substr(0, pos + 10));
         }
 
         // parse null
         if(str[pos] === "n") {
-            if(str.indexOf("null", pos) === pos) return "null";
+            if(str.indexOf("null", pos) === pos) {
+                return {
+                    originLength: "null".length,
+                    body: "null"
+                };
+            }
             throw new Error("Broken JSON boolean body near " + str.substr(0, pos + 10));
         }
     
@@ -81,7 +99,10 @@
                 if(str[i] === "-" || str[i] === "+" || str[i] === "." || (str[i] >= "0" && str[i] <= "9")) {
                     body += str[i];
                 } else {
-                    return body;
+                    return {
+                        originLength: body.length,
+                        body: body
+                    };
                 }
             }
     
@@ -93,20 +114,25 @@
             var stack = [ str[pos] ];
             var body = str[pos];
             for(var i = pos + 1; i < str.length; i++) {
-                body += str[i];
+                if(stack[stack.length - 1] === "'" && str[i] === "\"") {
+                    body += "\\\"";
+                } else {
+                    body += str[i];
+                }
+
                 if(str[i] === "\\") {
                     if(i + 1 < str.length) body += str[i + 1];
                     i++;
                 } else if(str[i] === "\"") {
                     if(stack[stack.length - 1] === "\"") {
                         stack.pop();
-                    } else {
+                    } else if(stack[stack.length - 1] !== "'") {
                         stack.push(str[i]);
                     }
                 } else if(str[i] === "'") {
                     if(stack[stack.length - 1] === "'") {
                         stack.pop();
-                    } else {
+                    } else if(stack[stack.length - 1] !== "\"") {
                         stack.push(str[i]);
                     }
                 } else if(stack[stack.length - 1] !== "\"" && stack[stack.length - 1] !== "'") {
@@ -130,7 +156,10 @@
                 }
     
                 if(!stack.length) {
-                    return body;
+                    return {
+                        originLength: i - pos,
+                        body: body
+                    };
                 }
             }
     
@@ -204,7 +233,7 @@
         if(str[0] === "{") {
             var type = "needKey";
             var result = "{";
-    
+
             for(var i = 1; i < str.length; i++) {
                 if(" " === str[i] || "\n" === str[i] || "\t" === str[i]) {
                     result += str[i];
@@ -226,8 +255,10 @@
                     type = ":";
                 } else if(type === ":") {
                     var body = getBody(str, i);
-                    i += (body.length - 1);
-                    result += parse(body);
+
+                    i = i + body.originLength - 1;
+                    result += parse(body.body);
+
                     type = "afterBody";
                 } else if(type === "afterBody" || type === "needKey") {
                     if(str[i] === ",") {
@@ -259,8 +290,10 @@
                     }
     
                     var body = getBody(str, i);
-                    i += body.length - 1;
-                    result += parse(body);
+
+                    i = i + body.originLength - 1;
+                    result += parse(body.body);
+
                     type = "afterBody";
                 } else if(type === "afterBody") {
                     if(str[i] === ",") {
