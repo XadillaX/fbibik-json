@@ -3,6 +3,7 @@
 [![fbbk-json](http://img.shields.io/npm/v/fbbk-json.svg)](https://www.npmjs.org/package/fbbk-json)
 [![TravisCI](https://img.shields.io/travis/XadillaX/fbibik-json/master.svg)](https://travis-ci.org/XadillaX/fbibik-json)
 [![Coveralls](https://img.shields.io/coveralls/XadillaX/fbibik-json/master.svg)](https://coveralls.io/r/XadillaX/fbibik-json)
+[![Dependency Status](https://david-dm.org/XadillaX/fbibik-json.svg)](https://david-dm.org/XadillaX/fbibik-json)
 
 Parse JSON-Object string (not normalized JSON string) into JSON object.
 
@@ -41,7 +42,7 @@ For example:
 So you can do that:
 
 ```javascript
-var json1 = '{"foo": "bar","baz": true,,}';
+var json1 = '{,,"foo": "bar",,,"baz": true,,}';
 var json2 = '{foo: \'bar\',baz: true,c:[]}';
 
 JSON.parse(json1);              ///< { foo: 'bar', baz: true }
