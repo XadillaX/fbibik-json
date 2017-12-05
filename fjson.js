@@ -1,7 +1,7 @@
 /**
  * XadillaX created at 2014-10-20 18:05
  *
- * Copyright (c) 2014 Huaban.com, all rights
+ * Copyright (c) 2017 xcoder.in, all rights
  * reserved.
  */
 "use strict";
@@ -182,6 +182,10 @@
         if(ch.charCodeAt(0) > 255) return true;
         return false;
     }
+
+    function isBlankChar(ch) {
+        return ch === " " || ch === "\n" || ch === "\t";
+    }
     
     /**
      * parse JSON
@@ -191,7 +195,14 @@
         str = str.trim();
         if(!str.length) throw new Error("Broken JSON object.");
         var result = "";
-    
+
+        /**
+         * the mistake ','
+         */
+        while(str && str[0] === ",") {
+            str = str.substr(1);
+        }
+
         /**
          * string
          */
@@ -235,15 +246,15 @@
             var result = "{";
 
             for(var i = 1; i < str.length; i++) {
-                if(" " === str[i] || "\n" === str[i] || "\t" === str[i]) {
-                    result += str[i];
+                if(isBlankChar(str[i])) {
+                    continue;
                 } else if(type === "needKey" && (str[i] === "\"" || str[i] === "'")) {
                     var key = parseKey(str, i + 1, str[i]);
                     result += "\"" + key + "\"";
                     i += key.length;
                     i += 1;
                     type = "afterKey";
-                } else if(type === "needKey" && canBeKeyHead(str[i])/**((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') || str[i] === '_')*/) {
+                } else if(type === "needKey" && canBeKeyHead(str[i])) {
                     var key = parseKey(str, i);
                     result += "\"";
                     result += key;
@@ -261,12 +272,21 @@
 
                     type = "afterBody";
                 } else if(type === "afterBody" || type === "needKey") {
-                    if(str[i] === ",") {
-                        result += ",";
-                        type = "needKey";
-                    } else if(str[i] === "}" && i === str.length - 1) {
+                    var last = i;
+                    while(str[last] === "," || isBlankChar(str[last])) {
+                        last++;
+                    }
+
+                    if(str[last] === "}" && last === str.length - 1) {
+                        while(result[result.length - 1] === ",") {
+                            result = result.substr(0, result.length - 1);
+                        }
                         result += "}";
                         return result;
+                    } else if(last !== i && result !== "{") {
+                        result += ",";
+                        type = "needKey";
+                        i = last - 1;
                     }
                 }
             }
@@ -282,9 +302,15 @@
             var type = "needBody";
             for(var i = 1; i < str.length; i++) {
                 if(" " === str[i] || "\n" === str[i] || "\t" === str[i]) {
-                    result += str[i];
+                    continue;
                 } else if(type === "needBody") {
+                    if(str[i] === ",") {
+                        result += "null,";
+                        continue;
+                    }
+
                     if(str[i] === "]" && i === str.length - 1) {
+                        if(result[result.length - 1] === ",") result = result.substr(0, result.length - 1);
                         result += "]";
                         return result;
                     }
@@ -299,6 +325,12 @@
                     if(str[i] === ",") {
                         result += ",";
                         type = "needBody";
+
+                        // deal with mistake ","
+                        while(str[i + 1] === "," || isBlankChar(str[i + 1])) {
+                            if(str[i + 1] === ",") result += "null,";
+                            i++;
+                        }
                     } else if(str[i] === "]" && i === str.length - 1) {
                         result += "]";
                         return result;
@@ -322,4 +354,3 @@
         return JSON.parse(jsonString);
     };
 })();
-

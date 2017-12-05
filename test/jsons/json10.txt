@@ -1,0 +1,17 @@
+,{
+,"label": "附件",
+"tag": "upload",
+"name": "filesUpload",
+"props": {
+  "listType": "text-image",
+  "action": "/comps/bus/UploadFile.do?_input_charset=utf8",
+  "multipart":{,
+      "minWidth":800,"minHeight":800,"fileLimit":8,"fileTypes":"xls,xlsx,ppt,pptx,doc,docx"},,
+  "accept": "image/png, image/jpg, image/jpeg, image/gif, image/bmp",
+  "text": "上传",
+  "test": [ ,1,,2,
+  ,],
+  ,
+  ,
+},
+}

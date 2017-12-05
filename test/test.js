@@ -7,6 +7,15 @@
 var fbbk = require("../fjson");
 var fs = require("fs");
 
+function createOrigJSON(filename, text) {
+    if(filename === "json10.txt") {
+        text = text.replace(/},,/g, "},").replace(/^,/g, "").replace(",\"label\"", "\"label\"")
+            .replace("  ,\n  ,", "").replace("\"multipart\":{,", "\"multipart\":{");
+    }
+
+    return new Function("return JSON.parse(JSON.stringify(" + text + "))")(); // jshint ignore: line
+}
+
 describe("test for fbbk-json", function() {
     describe("traversal for the directory", function() {
         require("should");
@@ -18,7 +27,7 @@ describe("test for fbbk-json", function() {
                 var json1, json2;
                 try {
                     json1 = fbbk.parse(text);
-                    json2 = new Function("return " + text)(); // jshint ignore: line
+                    json2 = createOrigJSON(filename, text);
                 } catch(e) {
                     if(e) {
                         console.log(e.stack);
