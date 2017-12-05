@@ -45,7 +45,7 @@ So you can do that:
 var json1 = '{,,"foo": "bar",,,"baz": true,,}';
 var json2 = '{foo: \'bar\',baz: true,c:[]}';
 
-JSON.parse(json1);              ///< { foo: 'bar', baz: true }
+JSON.parse(json1);              ///< SyntaxError: Unexpected token , in JSON at position 1
 JSON.parse(json2);              ///< SyntaxError: Unexpected token f
 fJSON.parse(json1);             ///< { foo: 'bar', baz: true }
 fJSON.parse(json2);             ///< { foo: 'bar', baz: true, c: [] }   ＼(●´ϖ`●)／
