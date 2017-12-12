@@ -211,9 +211,7 @@
                 throw new Error("Invalid string JSON object.");
             }
 
-            if(str[0] === "'") str[0] = "\"";
-            if(str[str.length - 1] === "'") str[str.length - 1] = "\"";
-            return str;
+            return "\"" + str.slice(1, -1) + "\"";
         }
     
         /**
