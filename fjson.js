@@ -43,14 +43,14 @@
     function getBody(str, pos) {
         // parse string body
         if(str[pos] === "\"" || str[pos] === "'") {
-            var body = "\"";
+            var body = str[pos];
             for(var i = pos + 1; i < str.length; i++) {
                 if(str[i] === "\\") {
                     body += str[i];
                     if(i + 1 < str.length) body += str[i + 1];
                     i++;
                 } else if(str[i] === str[pos]) {
-                    body += "\"";
+                    body += str[pos];
                     return {
                         originLength: body.length,
                         body: body
@@ -114,11 +114,7 @@
             var stack = [ str[pos] ];
             var body = str[pos];
             for(var i = pos + 1; i < str.length; i++) {
-                if(stack[stack.length - 1] === "'" && str[i] === "\"") {
-                    body += "\\\"";
-                } else {
-                    body += str[i];
-                }
+                body += str[i];
 
                 if(str[i] === "\\") {
                     if(i + 1 < str.length) body += str[i + 1];
@@ -211,7 +207,25 @@
                 throw new Error("Invalid string JSON object.");
             }
 
-            return "\"" + str.slice(1, -1).replace('\\\'', '\'') + "\"";
+            var body = "\"";
+            for(var i = 1; i < str.length; i++) {
+                if(str[i] === "\\") {
+                    if (str[i + 1] === "'") {
+                        body += str[i + 1]
+                    } else {
+                        body += str[i];
+                        body += str[i + 1];
+                    }
+                    i++;
+                } else if(str[i] === str[0]) {
+                    body += "\"";
+                    return body
+                } else if (str[i] === "\"") {
+                    body += "\\\""
+                } else body += str[i];
+            }
+
+            throw new Error("Invalid string JSON object.");
         }
     
         /**
