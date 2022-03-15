@@ -1,0 +1,7 @@
+{
+  singleQuoteEscape: 'single \' quote',
+  doubleQuoteEscape: "double \" quote",
+  singleInDouble: "double ' quote",
+  doubleInSingle: 'I " MM " I',
+  quoteArray: ['other single \' quote', "other double \" quote", 'I " MM " I']
+}
